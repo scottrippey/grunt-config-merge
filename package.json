@@ -1,0 +1,28 @@
+{
+  "name": "grunt-config-merge",
+  "version": "0.9.0",
+  "description": "Adds grunt.config.merge function (and alias grunt.mergeConfig), allowing you to organize your configuration object by feature.",
+  "main": "grunt.config.merge.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/scottrippey/grunt-config-merge.git"
+  },
+  "keywords": [
+    "config",
+    "merge",
+    "mergeConfig",
+    "organize",
+    "Gruntfile",
+    "feature"
+  ],
+  "author": "Scott Rippey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scottrippey/grunt-config-merge/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2"
+  }
+}
