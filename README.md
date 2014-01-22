@@ -1,0 +1,1 @@
+Adds grunt.config.merge function (and alias grunt.mergeConfig), allowing you to organize your configuration object by feature.
