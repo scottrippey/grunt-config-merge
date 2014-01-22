@@ -1,6 +1,6 @@
 {
   "name": "grunt-config-merge",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "Adds grunt.config.merge function (and alias grunt.mergeConfig), allowing you to organize your configuration object by feature.",
   "main": "grunt.config.merge.js",
   "scripts": {
