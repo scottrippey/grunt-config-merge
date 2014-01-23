@@ -1,9 +1,9 @@
-# `Grunt.config.merge(config)`
-Adds `grunt.config.merge(config)` function (and alias `grunt.mergeConfig(config)`).
+## `grunt.mergeConfig(config)`
+Adds `grunt.config.merge(config)` function, and alias `grunt.mergeConfig(config)`.
 
-This allows you to better organize your Grunt configuration.  Instead of having a single giant configuration,
-or splitting your configuration by **task**, you can now split your configuration by **feature**.  Your Gruntfile
-will be easier to read, understand, and maintain.
+This allows you to organize your Grunt configuration by **feature**, instead of having a single giant
+configuration organized by tasks.
+Your Gruntfile will be easier to read, understand, and maintain.
 
 ## Example of an *organized* Gruntfile
 
@@ -31,6 +31,7 @@ will be easier to read, understand, and maintain.
         concat: { 'CSS': { files: allCSS } },
         watch: { 'CSS': { files: allCSS, tasks: [ 'build-css' ] } }
       });
+
 
       grunt.loadNpmTasks('grunt-contrib-concat');
       grunt.loadNpmTasks('grunt-contrib-jshint');
