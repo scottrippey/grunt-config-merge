@@ -5,7 +5,7 @@ This allows you to organize your Grunt configuration by **feature**, instead of 
 configuration organized by tasks.
 Your Gruntfile will be easier to read, understand, and maintain.
 
-## Example of an *organized* Gruntfile
+## How to organize your Gruntfile by *feature*
 
     module.exports = function(grunt) {
 
@@ -37,11 +37,39 @@ Your Gruntfile will be easier to read, understand, and maintain.
       grunt.loadNpmTasks('grunt-contrib-jshint');
       grunt.loadNpmTasks('grunt-contrib-watch');
 
-    }
+    };
 
+## Or, organize your Gruntfile into separate files:
+
+Gruntfile.js:
+    module.exports = function(grunt) {
+      require('grunt-config-merge')(grunt);
+
+      require('./config-defaults.js')(grunt);
+      require('./config-javascripts.js')(grunt);
+      require('./config-css.js')(grunt);
+
+      grunt.loadNpmTasks('grunt-contrib-concat');
+      grunt.loadNpmTasks('grunt-contrib-jshint');
+      grunt.loadNpmTasks('grunt-contrib-watch');
+    };
+
+config-javascripts.js:
+    module.exports = function(grunt) {
+      // Configure all JavaScript tasks:
+      grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
+      grunt.mergeConfig({
+        concat: { 'JS': { files: allJS } },
+        jshint: { 'JS': { files: allJS } },
+        watch: { 'JS': { files: allJS, tasks: [ 'build-js' ] } }
+      });
+    };
+
+Etc...
 
 
 ## Installation
+
 Download and install via Node Package Manager:
 
     npm install --save-dev grunt-config-merge
