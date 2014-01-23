@@ -42,6 +42,7 @@ Your Gruntfile will be easier to read, understand, and maintain.
 ## Or, organize your Gruntfile into separate files:
 
 Gruntfile.js:
+
     module.exports = function(grunt) {
       require('grunt-config-merge')(grunt);
 
@@ -55,6 +56,7 @@ Gruntfile.js:
     };
 
 config-javascripts.js:
+
     module.exports = function(grunt) {
       // Configure all JavaScript tasks:
       grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
