@@ -14,11 +14,15 @@ module.exports = function(grunt) {
 
   require('grunt-config-merge')(grunt);
 
+
+
   // Configure task defaults:
   grunt.mergeConfig({
     concat: { options: { process: true } },
     watch: { options: { atBegin: true, livereload: true } }
   });
+
+
 
   // Configure all JavaScript tasks:
   grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
@@ -28,12 +32,15 @@ module.exports = function(grunt) {
     watch: { 'JS': { files: allJS, tasks: [ 'build-js' ] } }
   });
 
+
+
   // Configure all CSS tasks:
   grunt.registerTask('build-css', [ 'concat:CSS' ]);
   grunt.mergeConfig({
     concat: { 'CSS': { files: allCSS } },
     watch: { 'CSS': { files: allCSS, tasks: [ 'build-css' ] } }
   });
+
 
 
   grunt.loadNpmTasks('grunt-contrib-concat');
