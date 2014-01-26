@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
 
 
-  // Configure task defaults:
+  // Default options:
   grunt.mergeConfig({
     concat: { options: { process: true } },
     watch: { options: { atBegin: true, livereload: true } }
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
 
 
-  // Configure all JavaScript tasks:
+  // JavaScripts:
   grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
   grunt.mergeConfig({
     concat: { 'JS': { files: allJS } },
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
 
 
-  // Configure all CSS tasks:
+  // CSS:
   grunt.registerTask('build-css', [ 'concat:CSS' ]);
   grunt.mergeConfig({
     concat: { 'CSS': { files: allCSS } },
@@ -58,9 +58,9 @@ module.exports = function(grunt) {
 
   require('grunt-config-merge')(grunt);
 
-  require('./config-defaults.js')(grunt);
-  require('./config-javascripts.js')(grunt);
-  require('./config-css.js')(grunt);
+  require('./build-defaults.js')(grunt);
+  require('./build-js.js')(grunt);
+  require('./build-css.js')(grunt);
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -69,12 +69,27 @@ module.exports = function(grunt) {
 };
 ```
 
-config-javascripts.js:
+build-css.js:
 
 ```js
 module.exports = function(grunt) {
 
-  // Configure all JavaScript tasks:
+  // CSS:
+  grunt.registerTask('build-css', [ 'concat:CSS' ]);
+  grunt.mergeConfig({
+    concat: { 'CSS': { files: allCSS } },
+    watch: { 'CSS': { files: allCSS, tasks: [ 'build-css' ] } }
+  });
+
+};
+```
+
+build-js.js:
+
+```js
+module.exports = function(grunt) {
+
+  // JavaScripts:
   grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
   grunt.mergeConfig({
     concat: { 'JS': { files: allJS } },
