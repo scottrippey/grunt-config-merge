@@ -1,75 +1,80 @@
-## `grunt.mergeConfig(config)`
-Adds `grunt.config.merge(config)` function, and alias `grunt.mergeConfig(config)`.
+## Organize your Gruntfile by *feature*
 
-This allows you to organize your Grunt configuration by **feature**, instead of having a single giant
-configuration organized by tasks.
-Your Gruntfile will be easier to read, understand, and maintain.
+Adds `grunt.config.merge(config)` function, and alias `grunt.mergeConfig(config)`,
+helping you [organize your Gruntfile by feature](http://www.javapractices.com/topic/TopicAction.do?Id=205), rather than by task.
 
-## How to organize your Gruntfile by *feature*
+## Example:
 
-    module.exports = function(grunt) {
+Gruntfile.js
 
-      require('grunt-config-merge')(grunt);
+```js
+module.exports = function(grunt) {
 
-      // Configure task defaults:
-      grunt.mergeConfig({
-        concat: { options: { process: true } },
-        watch: { options: { atBegin: true, livereload: true } }
-      });
+  require('grunt-config-merge')(grunt);
 
-      // Configure all JavaScript tasks:
-      grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
-      grunt.mergeConfig({
-        concat: { 'JS': { files: allJS } },
-        jshint: { 'JS': { files: allJS } },
-        watch: { 'JS': { files: allJS, tasks: [ 'build-js' ] } }
-      });
+  // Configure task defaults:
+  grunt.mergeConfig({
+    concat: { options: { process: true } },
+    watch: { options: { atBegin: true, livereload: true } }
+  });
 
-      // Configure all CSS tasks:
-      grunt.registerTask('build-css', [ 'concat:CSS' ]);
-      grunt.mergeConfig({
-        concat: { 'CSS': { files: allCSS } },
-        watch: { 'CSS': { files: allCSS, tasks: [ 'build-css' ] } }
-      });
+  // Configure all JavaScript tasks:
+  grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
+  grunt.mergeConfig({
+    concat: { 'JS': { files: allJS } },
+    jshint: { 'JS': { files: allJS } },
+    watch: { 'JS': { files: allJS, tasks: [ 'build-js' ] } }
+  });
+
+  // Configure all CSS tasks:
+  grunt.registerTask('build-css', [ 'concat:CSS' ]);
+  grunt.mergeConfig({
+    concat: { 'CSS': { files: allCSS } },
+    watch: { 'CSS': { files: allCSS, tasks: [ 'build-css' ] } }
+  });
 
 
-      grunt.loadNpmTasks('grunt-contrib-concat');
-      grunt.loadNpmTasks('grunt-contrib-jshint');
-      grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
-    };
+};
+```
 
-## Or, organize your Gruntfile into separate files:
+## And then, easily split your Gruntfile into separate files!
 
 Gruntfile.js:
+```js
+module.exports = function(grunt) {
 
-    module.exports = function(grunt) {
+  require('grunt-config-merge')(grunt);
 
-      require('grunt-config-merge')(grunt);
+  require('./config-defaults.js')(grunt);
+  require('./config-javascripts.js')(grunt);
+  require('./config-css.js')(grunt);
 
-      require('./config-defaults.js')(grunt);
-      require('./config-javascripts.js')(grunt);
-      require('./config-css.js')(grunt);
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
-      grunt.loadNpmTasks('grunt-contrib-concat');
-      grunt.loadNpmTasks('grunt-contrib-jshint');
-      grunt.loadNpmTasks('grunt-contrib-watch');
-
-    };
+};
+```
 
 config-javascripts.js:
 
-    module.exports = function(grunt) {
+```js
+module.exports = function(grunt) {
 
-      // Configure all JavaScript tasks:
-      grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
-      grunt.mergeConfig({
-        concat: { 'JS': { files: allJS } },
-        jshint: { 'JS': { files: allJS } },
-        watch: { 'JS': { files: allJS, tasks: [ 'build-js' ] } }
-      });
+  // Configure all JavaScript tasks:
+  grunt.registerTask('build-js', [ 'concat:JS', 'jshint' ]);
+  grunt.mergeConfig({
+    concat: { 'JS': { files: allJS } },
+    jshint: { 'JS': { files: allJS } },
+    watch: { 'JS': { files: allJS, tasks: [ 'build-js' ] } }
+  });
 
-    };
+};
+```
 
 Etc...
 
