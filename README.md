@@ -1,7 +1,9 @@
 ## Organize your Gruntfile by *feature*
 
-Adds `grunt.config.merge(config)` function, and alias `grunt.mergeConfig(config)`,
-helping you [organize your Gruntfile by feature](http://www.javapractices.com/topic/TopicAction.do?Id=205), rather than by task.
+Adds `grunt.mergeConfig(...)`, which replaces `grunt.initConfig(...)`,
+and enables you to
+[**organize your Gruntfile by feature**](http://www.javapractices.com/topic/TopicAction.do?Id=205),
+rather than by task.
 
 ## Example:
 
