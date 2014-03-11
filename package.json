@@ -1,6 +1,6 @@
 {
   "name": "grunt-config-merge",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Adds `grunt.mergeConfig(...)`, which replaces `grunt.initConfig(...)`, and enables you to **organize your Gruntfile by feature**, rather than by task.",
   "main": "grunt.config.merge.js",
   "scripts": {
