@@ -4,6 +4,7 @@
   "description": "Adds `grunt.mergeConfig(...)`, which replaces `grunt.initConfig(...)`, and enables you to **organize your Gruntfile by feature**, rather than by task.",
   "main": "grunt.config.merge.js",
   "scripts": {
+	  "test": "grunt tests"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/scottrippey/grunt-config-merge/issues"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.3",
+    "grunt-contrib-nodeunit": "^0.3.2"
   }
 }
