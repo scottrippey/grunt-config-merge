@@ -13,10 +13,8 @@ module.exports = function(grunt) {
 
       var newValue = object[p]
         , existingValue = grunt.config.getRaw(namespaceStack)
-        , newValueIsObject = (typeof newValue === 'object' && !Array.isArray(newValue))
-        , existingValueIsObject = (typeof existingValue === 'object' && !Array.isArray(newValue))
-        , needsDeepMerge = (newValueIsObject && existingValueIsObject);
-
+	    , needsDeepMerge = isPlainObject(newValue) && isPlainObject(existingValue);
+	    
       if (newValue === existingValue) {
         // Skip
       } else if (needsDeepMerge) {
@@ -27,5 +25,8 @@ module.exports = function(grunt) {
     }
     namespaceStack.pop();
   }
-
+	
+  function isPlainObject(obj) {
+	  return Object.prototype.toString.call(obj) === '[object Object]';
+  }
 };
