@@ -23,17 +23,17 @@ exports['merge_test'] = {
 		grunt.mergeConfig({
 			vars: {
 				qwer: 'QWER'
-				, zxcv: { one: 1 }
+				, zxcv: { one: 1, two: "TWO" }
 			},
 			'test-data': {
-				'one': 1, 'two': { 'TWO': 2 }, 'three': 3, 
+				'one': 1, 'two': { 'TWO': 2 }, 'three': 3,
 				'four': '<%= vars.asdf %>', 'five': '<%= vars.zxcv %>',
 				'six': { 'SIX': 6 }
 			}
 		});
 		grunt.mergeConfig({
 			vars: {
-				zxcv: { two: 2 }
+				zxcv: { two: 2, three: 3 }
 			},
 			'test-data': {
 				'two': 2, 'three': nestedObject,
@@ -44,18 +44,19 @@ exports['merge_test'] = {
 		
 		test.deepEqual(grunt.config.get('vars.asdf'), 'ASDF', "Data is initialized");
 		test.deepEqual(grunt.config.get('vars.qwer'), 'QWER', "Data is merged");
-		test.deepEqual(grunt.config.get('vars.zxcv.one'), undefined, "Nested data is overridden");
+		test.deepEqual(grunt.config.get('vars.zxcv.one'), 1, "Nested data is deep-merged");
 		test.deepEqual(grunt.config.get('vars.zxcv.two'), 2, "Nested data is overridden");
-		test.deepEqual(grunt.config.get('vars.zxcv'), { two: 2 }, "Nested data is overridden");
+		test.deepEqual(grunt.config.get('vars.zxcv.three'), 3, "Nested data is deep-merged");
+		test.deepEqual(grunt.config.get('vars.zxcv'), { one: 1, two: 2, three: 3 }, "Nested data is merged");
 		
 		test.deepEqual(grunt.config.get('test-data.one'), 1, "Test data is merged");
 		test.deepEqual(grunt.config.get('test-data.two'), 2, "Test data is merged");
 		test.deepEqual(grunt.config.get('test-data.three'), nestedObject, "Test data is merged");
-		test.equal(grunt.config.getRaw('test-data.three'), nestedObject, "Test data is merged");
+		test.equal(grunt.config.getRaw('test-data.three'), nestedObject, "Test data is efficiently merged, without creating new objects if unnecessary");
 		test.deepEqual(grunt.config.get('test-data.three.3'), 'THREE', "Test data is merged");
 		test.deepEqual(grunt.config.get('test-data.four'), 'ASDF', "Test data is merged");
-		test.deepEqual(grunt.config.get('test-data.five'), { two: 2 }, "Test data is merged");
-		test.deepEqual(grunt.config.get('test-data.six'), [ 6 ], "Test data is merged");
+		test.deepEqual(grunt.config.get('test-data.five'), { one: 1, two: 2, three: 3 }, "Templates work within the merge");
+		test.deepEqual(grunt.config.get('test-data.six'), [ 6 ], "Incompatible objects are overridden, not merged");
 		test.deepEqual(grunt.config.get('test-data.seven'), 7, "Test data is merged");
 		
 		test.done();
