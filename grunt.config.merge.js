@@ -1,24 +1,32 @@
 module.exports = function(grunt) {
 
 	grunt.config.merge = grunt.mergeConfig = function(gruntConfig) {
-
-		forOwn(gruntConfig, function(taskConfig, task) {
-
-			forOwn(taskConfig, function(targetConfig, target) {
-
-				grunt.config.set([ task, target ], targetConfig);
-
-			});
-
-		});
-
+    recursiveMerge(gruntConfig, []);
 	};
 
-	function forOwn(obj, callback) {
-		for (var p in obj) {
-			if (obj.hasOwnProperty(p)) {
-				callback(obj[p], p);
-			}
-		}
-	}
+  function recursiveMerge(object, namespaceStack) {
+    namespaceStack.push(null);
+    for (var p in object) {
+      if (!object.hasOwnProperty(p)) continue;
+
+      namespaceStack[namespaceStack.length - 1] = p;
+
+      var newValue = object[p]
+        , existingValue = grunt.config.getRaw(namespaceStack)
+	    , needsDeepMerge = isPlainObject(newValue) && isPlainObject(existingValue);
+	    
+      if (newValue === existingValue) {
+        // Skip
+      } else if (needsDeepMerge) {
+        recursiveMerge(newValue, namespaceStack);
+      } else {
+        grunt.config.set(namespaceStack, newValue);
+      }
+    }
+    namespaceStack.pop();
+  }
+	
+  function isPlainObject(obj) {
+	  return Object.prototype.toString.call(obj) === '[object Object]';
+  }
 };
