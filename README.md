@@ -1,3 +1,18 @@
+# Update: This plugin is now included natively in Grunt v0.4.5+
+
+Starting in Grunt v0.4.5, they've merged this plugin into the root library!  
+This means that this plugin is now obsolete.  
+Please use the native `grunt.config.merge` instead!  
+
+
+Unfortunately, though, they did not include the alias `grunt.mergeConfig`.  
+In my opinion, `mergeConfig` symbolizes that it's a replacement for `initConfig`, and helps readability.  
+So, if you agree, you can simply add the following line of code to the top of your Gruntfile.js:  
+
+    grunt.mergeConfig = grunt.config.merge;
+
+
+
 ## Organize your Gruntfile by *feature*
 
 Adds `grunt.mergeConfig(...)`, which replaces `grunt.initConfig(...)`,
