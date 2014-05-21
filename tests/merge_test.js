@@ -1,6 +1,6 @@
 
 var grunt = require('grunt');
-require('../grunt.config.merge.js')(grunt);
+require('../grunt-config-merge.js')(grunt);
 
 exports['merge_test'] = {
 	"grunt.config.merge": function(test) {
